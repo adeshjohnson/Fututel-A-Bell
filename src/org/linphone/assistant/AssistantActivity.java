@@ -160,8 +160,9 @@ private static AssistantActivity instance;
 	}
 
 	private void initUI() {
-		back = (ImageView) findViewById(R.id.back);
-		back.setOnClickListener(this);
+		/* Para quitar el botón de atrás*/
+		//back = (ImageView) findViewById(R.id.back);
+		//back.setOnClickListener(this);
 		cancel = (ImageView) findViewById(R.id.assistant_cancel);
 		cancel.setOnClickListener(this);
 	}
@@ -209,7 +210,7 @@ private static AssistantActivity instance;
 			WelcomeFragment fragment = new WelcomeFragment();
 			changeFragment(fragment);
 			currentFragment = AssistantFragmentsEnum.WELCOME;
-			back.setVisibility(View.INVISIBLE);
+			//back.setVisibility(View.INVISIBLE);
 		} else if (currentFragment == AssistantFragmentsEnum.WELCOME) {
 			finish();
 		}
@@ -290,13 +291,19 @@ private static AssistantActivity instance;
 		}
 	}
 
+	public void verificateCode(String phoneNumber, String countryCode) {
+		displayVerification(phoneNumber, countryCode);
+	}
+
 	private void display(AssistantFragmentsEnum fragment) {
 		switch (fragment) {
 			case WELCOME:
-				displayMenu();
+				//displayMenu();
+				displayRegister();
 				break;
 			case LINPHONE_LOGIN:
-				displayLoginLinphone();
+				//displayLoginLinphone();
+				displayRegister();
 				break;
 		default:
 			throw new IllegalStateException("Can't handle " + fragment);
@@ -307,35 +314,54 @@ private static AssistantActivity instance;
 		fragment = new WelcomeFragment();
 		changeFragment(fragment);
 		currentFragment = AssistantFragmentsEnum.WELCOME;
-		back.setVisibility(View.INVISIBLE);
+		//back.setVisibility(View.INVISIBLE);
+	}
+
+	public void displayRegister() {
+		fragment = new RegisterFragment();
+		changeFragment(fragment);
+		currentFragment = AssistantFragmentsEnum.REGISTER;
+		//back.setVisibility(View.VISIBLE);
+	}
+
+	public void displayVerification(String phoneNumber, String countryCode) {
+		Bundle bundle=new Bundle();
+		bundle.putString("phoneNumber", phoneNumber);
+		bundle.putString("countryCode", countryCode);
+		//set Fragmentclass Arguments
+		fragment = new VerificationFragment();
+		fragment.setArguments(bundle);
+		changeFragment(fragment);
+		currentFragment = AssistantFragmentsEnum.VERIFICATION;
+		//back.setVisibility(View.VISIBLE);
 	}
 
 	public void displayLoginGeneric() {
 		fragment = new LoginFragment();
 		changeFragment(fragment);
 		currentFragment = AssistantFragmentsEnum.LOGIN;
-		back.setVisibility(View.VISIBLE);
+		//back.setVisibility(View.VISIBLE);
 	}
 	
 	public void displayLoginLinphone() {
 		fragment = new LinphoneLoginFragment();
 		changeFragment(fragment);
 		currentFragment = AssistantFragmentsEnum.LINPHONE_LOGIN;
-		back.setVisibility(View.VISIBLE);
+		//back.setVisibility(View.VISIBLE);
 	}
 
 	public void displayCreateAccount() {
 		fragment = new CreateAccountFragment();
 		changeFragment(fragment);
 		currentFragment = AssistantFragmentsEnum.CREATE_ACCOUNT;
-		back.setVisibility(View.VISIBLE);
+		//back.setVisibility(View.VISIBLE);
 	}
 
 	public void displayRemoteProvisioning() {
 		fragment = new RemoteProvisioningFragment();
 		changeFragment(fragment);
 		currentFragment = AssistantFragmentsEnum.REMOTE_PROVISIONING;
-		back.setVisibility(View.VISIBLE);
+		//back.setVisibility(View.VISIBLE);
 	}
 
 	public void retryLogin(String username, String password, String displayName, String domain, TransportType transport) {
@@ -411,10 +437,14 @@ private static AssistantActivity instance;
 				.setAvpfRRInterval(5);
 			}
 
-			if(transport != null) {
-				builder.setTransport(transport);
+			if(transport != null){
+				builder.setTransport(transport)
+                .setExpires("1800");
 			}
 		}
+        mPrefs.useRandomPort(true);  //To use effectively random port for SIP.
+		mPrefs.enableVideo(true);
+        mPrefs.setAutoStart(true);
 		
 		if (getResources().getBoolean(R.bool.enable_push_id)) {
 			String regId = mPrefs.getPushNotificationRegistrationID();
@@ -438,6 +468,7 @@ private static AssistantActivity instance;
 
  	public void displayRegistrationInProgressDialog(){
 		if(LinphoneManager.getLc().isNetworkReachable()) {
+            /*
 			progress = ProgressDialog.show(this,null,null);
 			Drawable d = new ColorDrawable(getResources().getColor(R.color.colorE));
 			d.setAlpha(200);
@@ -445,6 +476,14 @@ private static AssistantActivity instance;
 			progress.getWindow().setBackgroundDrawable(d);
 			progress.setContentView(R.layout.progress_dialog);
 			progress.show();
+            */
+            progress = new ProgressDialog(this);
+            progress.setTitle(getString(R.string.configuring_app));
+            progress.setMessage(getString(R.string.configuring_app_with_your_data));
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+            progress.show();
 		}
 	}
 

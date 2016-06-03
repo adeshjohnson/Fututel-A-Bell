@@ -2,19 +2,20 @@
 <resources>
 
 	<!-- Custom -->
-	<string name="app_name">Linphone</string>
-	<string name="service_name">Linphone Service</string>
-	<string name="addressbook_label">Linphone</string>
-	<string name="notification_title">Linphone</string>
+	<string name="app_name">Fututel</string>
+	<string name="service_name">Fututel</string>
+	<string name="addressbook_label">Fututel</string>
+	<string name="notification_title">Fututel</string>
 	<string name="wait_dialog_text">Starting up</string>
 	<string name="notification_registered">%s registered</string>
 	<string name="notification_register_failure">%s failed to register</string>
-	<string name="tunnel_host"></string>
-	<string name="about_version">Linphone Android %s</string>
-	<string name="about_liblinphone_version">Linphone Core %s</string>
-	<string name="about_text">GNU General Public License V2\n © 2010-2016 Belledonne Communications</string>
-	<string name="about_link">www.linphone.org</string>
-	<string name="sync_account_name">linphone contacts</string>
+	<string name="about_version">Fututel Android %s</string>
+	<string name="about_liblinphone_version">Fututel Core %s</string>
+	<string name="about_text">GNU General Public License V2\n © 2016 Fututel SAS</string>
+	<string name="about_link">fututel.com</string>
+
+	<string name="sync_account_name">Fututel contacts</string>
+
 	<string name="history_date_format">EEE, d MMM</string>
 	<string name="history_detail_date_format">yyyy/MM/dd - HH:mm - </string>
 	<string name="messages_date_format">dd/MM, HH:mm</string>
@@ -49,7 +50,7 @@
 	<string name="conference">Conference</string>
 
 	<!-- Launch screen -->
-	<string name="app_description">the <i>libre</i> SIP client</string>
+	<string name="app_description">Videollamadas Gratis</string>
 
 	<!-- Assistant -->
 	<string name="welcome">Welcome</string>
@@ -331,7 +332,7 @@
 	<string name="content_description_search">Search</string>
 	<string name="content_description_search_contact">Search contact</string>
 	<string name="content_description_all_contacts">All contacts</string>
-	<string name="content_description_linphone_contacts">Linphone contacts</string>
+	<string name="content_description_linphone_contacts">Fututel contacts</string>
 	<string name="content_description_call_direction">Call direction</string>
 	<string name="content_description_all_calls">All calls</string>
 	<string name="content_description_missed_calls">Missed calls</string>
@@ -370,4 +371,39 @@
 	<string name="content_description_call_options">Call options</string>
 	<string name="content_description_audio_route">Audio route</string>
 	<string name="content_description_exit_conference">Exit conference</string>
+
+	<!--Nuevos strings agregados para Fututel (tiene su traducción en el archivo strings.xml es)-->
+
+	<string name="phone">Phone</string>
+	<string name="register">Register</string>
+	<string name="login">Custom Login</string>
+	<string name="calls">Calls</string>
+	<string name="chats">Chats</string>
+	<string name="country">Country</string>
+	<string name="country_code">Country Prefix</string>
+	<string name="invalid_country_code">Invalid Country Code</string>
+	<string name="invalid_phone_number">Invalid Phone Number</string>
+	<string name="title_activity_verification_code">VerificationCodeActivity</string>
+
+	<string name="code_sent">An SMS containing a verification code was sent to your mobile. This may take up various minutes... </string>
+	<string name="continue_string">Continue</string>
+	<string name="verification_code">Verification Code</string>
+
+	<string name="drawer_open">Open navigation drawer</string>
+	<string name="drawer_close">Close navigation drawer</string>
+
+	<string name="account_image_description">Account avatar</string>
+	<string name="account_settings_confirm_password">Confirm password</string>
+	<string name="assistant_fututel_desc">Choose your Country and Type you Mobile Number</string>
+	<string name="assistant_fututel_account">Configure Fututel Account</string>
+	<string name="internet_connection_error">Check your internet connection or try later</string>
+    <string name="invalid_verification_code">Invalid Verification Code</string>
+	<string name="already_have_a_code">Already Have a Code</string>
+	<string name="write_verification_code">Type the verification code</string>
+	<string name="sending_sms">SENDING SMS...</string>
+	<string name="sending_verification_code_by_SMS">Sending Verification Code by SMS...</string>
+	<string name="registration_in_fututel">REGISTRATION IN FUTUTEL</string>
+	<string name="contacting_fututel_server_to_make_registration">Contacting Fututel\'s server to make Registration...</string>
+	<string name="configuring_app">CONFIGURING APP</string>
+	<string name="configuring_app_with_your_data">Configuring application with your data...</string>
 </resources>
