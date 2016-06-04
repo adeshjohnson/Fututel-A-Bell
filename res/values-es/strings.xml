@@ -310,7 +310,7 @@
     <string name="configuring_app">CONFIGURANDO APP</string>
     <string name="configuring_app_with_your_data">Configurando aplicación con tus datos...</string>
 
-  <!-- Dailer -->
+  <!-- Dialer -->
   <string name="address_bar_hint">Entre un Número o Dirección</string>
   
 <string name="content_description_default_account">Cuenta por defecto</string>

@@ -573,14 +573,23 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 			Log.e(e);
 		}
 		finally {
-			mServiceContext.unregisterReceiver(instance.mKeepAliveReceiver);
+			try {
+				mServiceContext.unregisterReceiver(mKeepAliveReceiver);
+			} catch (Exception e) {
+				Log.e(e);
+			}
 			mLc = null;
 		}
 	}
 
-	public void restartLinphoneCore(){
+	public void restartLinphoneCore() {
 		destroyLinphoneCore();
 		startLibLinphone(mServiceContext);
+
+		IntentFilter lFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        lFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mServiceContext.registerReceiver(mKeepAliveReceiver, lFilter);
+        
 		sExited = false;
 	}
 
@@ -789,7 +798,7 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 			Log.e(e);
 		}
 		finally {
-			mServiceContext.unregisterReceiver(instance.mKeepAliveReceiver);
+			mServiceContext.unregisterReceiver(mKeepAliveReceiver);
 			mLc = null;
 			instance = null;
 		}

@@ -27,6 +27,7 @@ import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneAddress.TransportType;
 import org.linphone.core.LinphoneCore;
 import org.linphone.core.LinphoneCore.RegistrationState;
+import org.linphone.core.LinphoneCore.RemoteProvisioningState;
 import org.linphone.core.LinphoneCoreException;
 import org.linphone.core.LinphoneCoreFactory;
 import org.linphone.core.LinphoneCoreListenerBase;
@@ -71,6 +72,7 @@ private static AssistantActivity instance;
 	private StatusFragment status;
 	private ProgressDialog progress;
 	private Dialog dialog;
+	private boolean remoteProvisioningInProgress;
 	private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 201;
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,27 +98,30 @@ private static AssistantActivity instance;
 			status.enableSideMenu(false);
 		//}
         
-        mListener = new LinphoneCoreListenerBase(){
+        mListener = new LinphoneCoreListenerBase() {
         	@Override
-        	public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, LinphoneCore.RegistrationState state, String smessage) {
-				if(accountCreated && !newAccount){
-					if(address != null && address.asString().equals(cfg.getAddress().asString()) ) {
+        	public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, RegistrationState state, String smessage) {
+        		if (remoteProvisioningInProgress) {
+        			if (progress != null) progress.dismiss();
+        			if (state == RegistrationState.RegistrationOk) {
+            			remoteProvisioningInProgress = false;
+        				success();
+        			}
+        		} else if (accountCreated && !newAccount){
+					if (address != null && address.asString().equals(cfg.getAddress().asString()) ) {
 						if (state == RegistrationState.RegistrationOk) {
-							if(progress != null)
-								progress.dismiss();
+							if (progress != null) progress.dismiss();
 							if (LinphoneManager.getLc().getDefaultProxyConfig() != null) {
 								launchEchoCancellerCalibration(true);
 							}
 						} else if (state == RegistrationState.RegistrationFailed) {
-							if(progress != null)
-								progress.dismiss();
-							if(dialog == null || !dialog.isShowing()) {
+							if (progress != null) progress.dismiss();
+							if (dialog == null || !dialog.isShowing()) {
 								dialog = createErrorDialog(cfg, smessage);
 								dialog.show();
 							}
 						} else if(!(state == RegistrationState.RegistrationProgress)) {
-							if(progress != null)
-								progress.dismiss();
+							if (progress != null) progress.dismiss();
 						}
 					}
 				}
@@ -128,7 +133,7 @@ private static AssistantActivity instance;
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
 		if (lc != null) {
 			lc.addListener(mListener);
@@ -442,9 +447,9 @@ private static AssistantActivity instance;
                 .setExpires("1800");
 			}
 		}
-        mPrefs.useRandomPort(true);  //To use effectively random port for SIP.
+        	mPrefs.useRandomPort(true);  //To use effectively random port for SIP.
 		mPrefs.enableVideo(true);
-        mPrefs.setAutoStart(true);
+       		mPrefs.setAutoStart(true);
 		
 		if (getResources().getBoolean(R.bool.enable_push_id)) {
 			String regId = mPrefs.getPushNotificationRegistrationID();
@@ -468,15 +473,7 @@ private static AssistantActivity instance;
 
  	public void displayRegistrationInProgressDialog(){
 		if(LinphoneManager.getLc().isNetworkReachable()) {
-            /*
-			progress = ProgressDialog.show(this,null,null);
-			Drawable d = new ColorDrawable(getResources().getColor(R.color.colorE));
-			d.setAlpha(200);
-			progress.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-			progress.getWindow().setBackgroundDrawable(d);
-			progress.setContentView(R.layout.progress_dialog);
-			progress.show();
-            */
+
             progress = new ProgressDialog(this);
             progress.setTitle(getString(R.string.configuring_app));
             progress.setMessage(getString(R.string.configuring_app_with_your_data));
@@ -485,6 +482,18 @@ private static AssistantActivity instance;
             progress.setCancelable(false);
             progress.show();
 		}
+	}
+
+ 	public void displayRemoteProvisioningInProgressDialog() {
+		remoteProvisioningInProgress = true;
+		
+		progress = ProgressDialog.show(this, null, null);
+		Drawable d = new ColorDrawable(getResources().getColor(R.color.colorE));
+		d.setAlpha(200);
+		progress.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+		progress.getWindow().setBackgroundDrawable(d);
+		progress.setContentView(R.layout.progress_dialog);
+		progress.show();
 	}
 
 	public void displayAssistantConfirm(String username, String password) {
@@ -539,5 +548,15 @@ private static AssistantActivity instance;
 			setResult(Activity.RESULT_OK);
 		}
 		finish();
+	}
+
+	public void setLinphoneCoreListener() {
+		LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
+		if (lc != null) {
+			lc.addListener(mListener);
+		}
+		if (status != null) {
+			status.setLinphoneCoreListener();
+		}
 	}
 }
