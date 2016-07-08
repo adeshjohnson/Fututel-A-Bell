@@ -14,8 +14,8 @@ auto_answer_replacing_calls=1
 ping_with_options=0
 
 [rtp]
-audio_rtp_port=7076
-video_rtp_port=9078
+audio_rtp_port=27056
+video_rtp_port=29058
 audio_jitt_comp=60
 video_jitt_comp=60
 nortp_timeout=30

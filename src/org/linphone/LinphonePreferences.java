@@ -1060,7 +1060,7 @@ public class LinphonePreferences {
 	}
 
 	public boolean isAutoStartEnabled() {
-		return getConfig().getBool("app", "auto_start", false);
+		return getConfig().getBool("app", "auto_start", true);
 	}
 
 	public void setAutoStart(boolean autoStartEnabled) {

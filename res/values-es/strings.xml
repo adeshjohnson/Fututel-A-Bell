@@ -248,10 +248,8 @@
   <string name="confirm_password">Confirmación de contraseña</string>
   <string name="connect">Conección</string>
   <string name="content_description_backspace"></string>
-  <string name="content_description_add">Agregar botón</string>
   <string name="content_description_call_direction">Dirección de llamada</string>
   <string name="content_description_detail">Detalles</string>
-  <string name="content_description_edit">Editar botón</string>
   <string name="content_description_encryption">Encriptación</string>
   <string name="content_description_history">Botón de Historial</string>
   <string name="content_description_message_status">Estado del mensaje</string>

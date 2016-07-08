@@ -70,7 +70,6 @@ public class RegisterFragment extends Fragment {
 	private String countryCode;
 	private EditText mCountryCodeText;
 	private ProgressBar mProgressBar;
-
     private String stringToSha1;
 	private String sha1CodedString;
 	public boolean makingPostRequest = false;
@@ -169,7 +168,7 @@ public class RegisterFragment extends Fragment {
                  /* Proceso asíncrono para envío de SMS */
 
 
-                    urlForPostRequest = "http://sip.fututel.com/billing/api/send_sms_verification_code?u=admin&country_prefix="+countryCode+"&local_number="+mPhone.getText().toString()+"&hash="+sha1CodedString;
+                    urlForPostRequest = "http://llamadas.fututel.com/billing/api/send_sms_verification_code?u=admin&country_prefix="+countryCode+"&local_number="+mPhone.getText().toString()+"&hash="+sha1CodedString;
                     makingPostRequest = true;
 
                     //Ejecuta el proceso asíncrono para la petición post

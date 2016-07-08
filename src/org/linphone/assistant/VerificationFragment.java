@@ -174,7 +174,7 @@ public class VerificationFragment extends Fragment {
                 {
                  /* Proceso asíncrono para registro nuevo o existente */
 
-                    urlForPostRequest = "http://sip.fututel.com/billing/api/user_register_mobile?u=admin&country_prefix=" + countryCode + "&local_number=" + phoneNumber + "&verif_code=" + verificationCode + "&hash=" + sha1CodedString;
+                    urlForPostRequest = "http://llamadas.fututel.com/billing/api/user_register_mobile?u=admin&country_prefix=" + countryCode + "&local_number=" + phoneNumber + "&verif_code=" + verificationCode + "&hash=" + sha1CodedString;
                      makingPostRequest = true;
 
                     //Ejecuta el proceso asíncrono para la petición post
@@ -297,7 +297,7 @@ public class VerificationFragment extends Fragment {
             if (success) {
                 dialog.dismiss();
                 Toast.makeText(getActivity(), textresponse, Toast.LENGTH_LONG).show();
-                AssistantActivity.instance().genericLogIn(username, password, "", "sip.fututel.com", TransportType.LinphoneTransportUdp);
+                AssistantActivity.instance().genericLogIn(username, password, "", "telecom.fututel.com", TransportType.LinphoneTransportUdp);
             } else {
                 dialog.dismiss();
                 Toast.makeText(getActivity(), textresponse, Toast.LENGTH_LONG).show();
